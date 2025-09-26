@@ -1,25 +1,25 @@
 import { AppLineChart } from "@/components/AppLineChart";
 import DashboardCards from "@/components/DashboardCards";
-import { UrgentDeadline } from "@/components/UrgentDeadlines";
+import DataTables from "@/components/DataTables";
 import { TopPerformingLocations } from "@/components/TopPerformingLocations";
-import { LatestInquiries } from "@/components/LatestInquiries";
 
 export default function Home() {
   return (
-   <main className="px-8">
+   <main className="px-8 py-8">
    <div className="grid gap-4 col-span-1 lg:col-span-2 2xl:col-span-4">
     {/* cards */}
    <div className="mt-6 p-6"><DashboardCards /></div>
    {/* linechart */}
-   <div><AppLineChart /></div>
+   <div className="p-6"><AppLineChart /></div>
    {/* tables */}
-   <div>
+   <div className="flex flex-col">
     {/* <DataTable /> */}
-    <UrgentDeadline />
-    <LatestInquiries />
+    {/* <UrgentDeadline />
+    <LatestInquiries /> */}
+    {/* <DataTables /> */}
    </div>
    {/* locations */}
-   <div><TopPerformingLocations /></div>
+   <div className="p-6"><TopPerformingLocations /></div>
    </div>
    </main>
   );

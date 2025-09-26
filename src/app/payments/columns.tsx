@@ -1,12 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -16,48 +14,108 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 export type Payment = {
   id: string;
-  amount: number;
   username: string;
   email: string;
   status: "pending" | "processing" | "success" | "failed";
-  client: string
+  venue: string
+  eventdate: string
+  deadline: string
+  eventType: string
+  guest: number
+  // notes: "main yahan icon use krna chahta hoon kaisa"
 };
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        checked={row.getIsSelected()}
-      />
-    ),
+    accessorKey: "id",
+    header: "ID",
+    cell: ({ row }) => {
+      const id = row.getValue("id") as string;
+      return <span className="text-blue-400 underline">{id}</span>;
+    },
   },
   {
     accessorKey: "username",
-    header: "User",
+    header: ({ column }) => {
+      return (
+        <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Contact Person
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    }
   },
   {
-    accessorKey: "email",
+    accessorKey: "venue",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
+          >
+          Venue
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+  },
+  {
+  accessorKey: "email",
+  header: ({ column }) => (
+    <Button
+      variant="ghost"
+      onClick={() =>
+        column.toggleSorting(column.getIsSorted() === "asc")
+      }
+    >
+      Email
+      <ArrowUpDown className="ml-2 h-4 w-4" />
+    </Button>
+  ),
+  cell: ({ row }) => (
+    <div className="lowercase">{row.getValue("email")}</div>
+  ),
+},
+
+  {
+    accessorKey: "eventdate",
+    header: "Event Date",
+    cell: ({ row }) => {
+      const eventdate = row.getValue("eventdate") as string;
+      return <span className="capitalize">{eventdate}</span>;
+    },
+  },
+  {
+    accessorKey: "deadline",
+    header: "Deadline",
+    cell: ({ row }) => {
+      const deadline = row.getValue("deadline") as string;
+      return <span>{deadline}</span>;
+    },
+  },
+  {
+    accessorKey: "eventType",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+          Event Type
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "guest",
+    header: "Guests",
+    cell: ({ row }) => {
+      const guest = row.getValue("guest") as string;
+      return <span>{guest}</span>;
     },
   },
   {
@@ -81,20 +139,8 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
     id: "actions",
+    header: () => <div className="text-center">Actions</div>,
     cell: ({ row }) => {
       const payment = row.original;
 
@@ -107,15 +153,13 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

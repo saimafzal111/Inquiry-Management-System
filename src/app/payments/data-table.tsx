@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import {
   ColumnDef,
   flexRender,
@@ -18,8 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
-import { useState } from "react"
+import { Button } from "@/components/ui/button"
 import { DataTablePagination } from "@/components/TablePagination"
 
 interface DataTableProps<TData, TValue> {
@@ -31,41 +31,38 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
 
-    const [sorting, setSorting] = useState<SortingState>([])
-    const [rowSelection, setRowSelection] = useState({})
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
     onSortingChange: setSorting,
-    onRowSelectionChange:setRowSelection,
-    state:{
-        sorting,
-        rowSelection
-    }
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel()
   })
 
   return (
-    <div className="overflow-hidden rounded-md border">
-      <Table>
+    <>
+      <div className="overflow-hidden rounded-md border and mt-2">
+      <div className="relative w-full overflow-x-auto">
+        <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
@@ -92,7 +89,9 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <DataTablePagination table={table} />
+      </div>
     </div>
+      <DataTablePagination table={table} />
+    </>
   )
 }

@@ -1,8 +1,11 @@
+import Inquiries from '@/components/Inquiries'
 import React from 'react'
 
 function inquiriesPage() {
   return (
-    <div>inquiriesPage</div>
+    <div>
+      <Inquiries />
+    </div>
   )
 }
 
