@@ -20,6 +20,7 @@ export type Payment = {
   username: string;
   email: string;
   status: "pending" | "processing" | "success" | "failed";
+  client: string
 };
 
 export const columns: ColumnDef<Payment>[] = [

@@ -1,7 +1,8 @@
 import { AppLineChart } from "@/components/AppLineChart";
 import DashboardCards from "@/components/DashboardCards";
+import { UrgentDeadline } from "@/components/UrgentDeadlines";
 import { TopPerformingLocations } from "@/components/TopPerformingLocations";
-// import { DataTable } from "@/components/DataTables";
+import { LatestInquiries } from "@/components/LatestInquiries";
 
 export default function Home() {
   return (
@@ -14,7 +15,8 @@ export default function Home() {
    {/* tables */}
    <div>
     {/* <DataTable /> */}
-    test
+    <UrgentDeadline />
+    <LatestInquiries />
    </div>
    {/* locations */}
    <div><TopPerformingLocations /></div>
