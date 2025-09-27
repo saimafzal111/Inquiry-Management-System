@@ -1,8 +1,8 @@
 // data-table.tsx
 
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,11 +14,10 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -26,16 +25,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar'; 
-import { ChevronsUpDown, Settings2, CalendarIcon } from 'lucide-react'; 
-import Link from 'next/link';
+} from "@/components/ui/popover";
+import { ChevronsUpDown, Settings2 } from "lucide-react";
+import Link from "next/link";
+import DataTablePagination from "@/components/TablePagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -75,92 +74,70 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="w-full">
-    
-      <div className="flex w-full justify-between mb-4">
-        <div className="flex gap-2">
+      {/* Filters and Actions */}
+      <div className="flex flex-col gap-3 mb-4 md:flex-row md:items-center md:justify-between">
+        {/* Left side filters */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <Input
-            placeholder="Filter by name or venue"
-            value={(table.getColumn('contactPerson')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('contactPerson')?.setFilterValue(event.target.value)
+            placeholder="Filter by location name"
+            value={
+              (table.getColumn("contactPerson")?.getFilterValue() as string) ??
+              ""
             }
-            className="max-w-sm"
+            onChange={(event) =>
+              table.getColumn("contactPerson")?.setFilterValue(event.target.value)
+            }
+            className="w-full max-w-sm sm:w-[220px]"
           />
-
 
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
-                className="w-[120px] justify-between capitalize"
+                className="w-full sm:w-[140px] justify-between capitalize"
               >
-                All
+                All Status
                 <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[120px] p-0">
-             
-              <p className="p-2 text-sm">Filter options...</p>
-            </PopoverContent>
-          </Popover>
-
-          {/* Dummy Date Picker Popover */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="justify-between font-normal"
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                Select date
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                // Implement date state/logic
-              />
+            <PopoverContent className="w-[140px] p-0">
+              <p className="p-2 text-sm">Filter...</p>
             </PopoverContent>
           </Popover>
         </div>
 
-        <div className="flex gap-2">
-        
-          <Button variant="outline">
+        {/* Right side actions */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <Button variant="outline" className="w-full sm:w-auto">
             Views <Settings2 className="ml-2 h-4 w-4" />
           </Button>
 
-          {/* Add Inquiry Button */}
-          <Link href="/inquiries/create">
-            <Button className="bg-orange-500/95 text-white hover:bg-orange-400
-">
-              + Add Inquiry
+          <Link href="/inquiries/create" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto bg-orange-500/95 text-white hover:bg-orange-400">
+              + Add Venue
             </Button>
           </Link>
         </div>
       </div>
-      {/* End of Filters and Actions Bar */}
 
+      {/* Table */}
       <div className="overflow-hidden rounded-md border mt-2">
         <div className="relative w-full overflow-x-auto">
-          <Table>
+          <Table className="min-w-[600px]">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id} className="px-4">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id} className="px-4">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  ))}
                 </TableRow>
               ))}
             </TableHeader>
@@ -169,18 +146,27 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}
+                    data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="p-2 align-middle whitespace-nowrap px-4">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      <TableCell
+                        key={cell.id}
+                        className="p-2 align-middle whitespace-nowrap px-4"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
                     No results.
                   </TableCell>
                 </TableRow>
@@ -191,24 +177,7 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
+      <DataTablePagination table={table} />
     </div>
   );
 }

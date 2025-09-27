@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Inquiry } from '../inquiries/page';
+import { Inquiry } from '../inquiries/inquiries';
 import { Button } from '@/components/ui/button'; 
 import { Badge } from '@/components/ui/badge'; 
 import { ArrowUpDown, ScrollText, MoreHorizontal } from 'lucide-react'; 
@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
@@ -147,16 +146,14 @@ export const columns: ColumnDef<Inquiry>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
             {/* Edit */}
-            <DropdownMenuItem asChild>
-              <Link href={`/inquiries/edit/${inquiry.id}`}>Edit Inquiry</Link>
+            <DropdownMenuItem>
+              Edit Inquiry
             </DropdownMenuItem>
 
             {/* Delete */}
             <DropdownMenuItem
-              onClick={() => alert(`Delete inquiry ${inquiry.id}`)}
               className="text-red-600"
             >
               Delete Inquiry

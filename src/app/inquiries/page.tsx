@@ -1,7 +1,6 @@
-import { DataTable } from '../payments/data-table';
-import { columns } from '../payments/columns';
-import { inquiries } from '../../app/inquiries/inquiries'; 
-
+import { DataTable } from "../payments/data-table";
+import { columns } from "../payments/columns";
+import { inquiries } from "../../app/inquiries/inquiries";
 
 export default function InquiryOversightPage() {
   const data = inquiries;
@@ -12,7 +11,9 @@ export default function InquiryOversightPage() {
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
           <div className="w-full px-6">
             <div className="flex flex-col py-4">
-              <h2 className="text-2xl font-bold mb-2">Inquiry Oversight</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold">Inquiry Oversight</h2>
+              </div>
               <DataTable columns={columns} data={data} />
             </div>
           </div>
