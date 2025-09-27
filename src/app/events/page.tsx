@@ -1,11 +1,10 @@
-// import { EventTable } from '@/components/EventsTable'
+import { EventTable } from '@/components/EventTable'
 import React from 'react'
 
 function eventPage() {
   return (
     <div>
-      {/* <EventTable /> */}
-      events
+      <EventTable />
     </div>
   )
 }

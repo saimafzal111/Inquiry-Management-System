@@ -1,9 +1,9 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
+import { EditEvent } from "./EditEvent"
 import { Button } from "./ui/button"
 import { DeleteEvent } from "./DeleteEvent"
-import { EditEvent } from "./EditEvent"
 
 const events = [
   { name: "Wedding" },
@@ -29,13 +29,7 @@ export function EventTable() {
               {/* Action buttons */}
               <div className="flex items-center gap-3">
                 <EditEvent />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="border rounded-md hover:bg-gray-100 transition"
-                >
                   <DeleteEvent />
-                </Button>
               </div>
             </div>
           ))}

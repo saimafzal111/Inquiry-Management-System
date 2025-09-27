@@ -3,11 +3,9 @@ import React from 'react'
 
 function Inquiries() {
   return (
-    <div className='overflow-hidden rounded-md border and mt-2'>
-      <div className='w-full overflow-x-auto'>
+    <div>
         <PaymentPage />
       </div>
-    </div>
   )
 }
 

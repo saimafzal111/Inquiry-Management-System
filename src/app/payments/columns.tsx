@@ -1,148 +1,142 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
+import { ColumnDef } from '@tanstack/react-table';
+import { Inquiry } from '../inquiries/page';
+import { Button } from '@/components/ui/button'; 
+import { Badge } from '@/components/ui/badge'; 
+import { ArrowUpDown, ScrollText, MoreHorizontal } from 'lucide-react'; 
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+} from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 
-export type Payment = {
-  id: string;
-  username: string;
-  email: string;
-  status: "pending" | "processing" | "success" | "failed";
-  venue: string
-  eventdate: string
-  deadline: string
-  eventType: string
-  guest: number
-  // notes: "main yahan icon use krna chahta hoon kaisa"
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Inquiry>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => {
-      const id = row.getValue("id") as string;
-      return <span className="text-blue-400 underline">{id}</span>;
-    },
-  },
-  {
-    accessorKey: "username",
-    header: ({ column }) => {
-      return (
-        <Button
+    accessorKey: 'id',
+    header: ({ column }) => (
+      <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Contact Person
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    }
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        className="!px-0"
+      >
+        ID
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <Link href={`/inquiries/edit/${row.original.id}`} className="capitalize pointer">
+        <span className="underline text-blue-600">{row.original.id}</span>
+      </Link>
+    ),
   },
   {
-    accessorKey: "venue",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-          Venue
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: 'contactPerson',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        className="!px-0"
+      >
+        Contact Person
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue('contactPerson')}</div>,
   },
   {
-  accessorKey: "email",
-  header: ({ column }) => (
-    <Button
-      variant="ghost"
-      onClick={() =>
-        column.toggleSorting(column.getIsSorted() === "asc")
-      }
-    >
-      Email
-      <ArrowUpDown className="ml-2 h-4 w-4" />
-    </Button>
-  ),
-  cell: ({ row }) => (
-    <div className="lowercase">{row.getValue("email")}</div>
-  ),
-},
-
+    accessorKey: 'venue',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        className="!px-0"
+      >
+        Venue
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue('venue')}</div>,
+  },
   {
-    accessorKey: "eventdate",
-    header: "Event Date",
+    accessorKey: 'email',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        className="!px-0"
+      >
+        Email
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
+  },
+  {
+    accessorKey: 'eventDate',
+    header: 'Event Date',
+    cell: ({ row }) => <div className="capitalize">{row.getValue('eventDate')}</div>,
+  },
+  {
+    accessorKey: 'deadline',
+    header: 'Deadline',
+    cell: ({ row }) => <div>{row.getValue('deadline')}</div>,
+  },
+  {
+    accessorKey: 'eventType',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        className="!px-0"
+      >
+        Event Type
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue('eventType')}</div>,
+  },
+  {
+    accessorKey: 'guests',
+    header: 'Guests',
+    cell: ({ row }) => <div>{row.getValue('guests')}</div>,
+  },
+  {
+    accessorKey: 'notes',
+    header: 'Notes',
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {row.original.notes ? <ScrollText className="w-5 h-5" /> : ""}
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'status',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        className="!px-0"
+      >
+        Status
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <Badge className="bg-gray-300 text-gray-800 hover:bg-gray-300/80">
+        {row.getValue('status')}
+      </Badge>
+    ),
+  },
+  {
+    id: 'actions',
+    enableHiding: false,
+    header: 'Actions',
     cell: ({ row }) => {
-      const eventdate = row.getValue("eventdate") as string;
-      return <span className="capitalize">{eventdate}</span>;
-    },
-  },
-  {
-    accessorKey: "deadline",
-    header: "Deadline",
-    cell: ({ row }) => {
-      const deadline = row.getValue("deadline") as string;
-      return <span>{deadline}</span>;
-    },
-  },
-  {
-    accessorKey: "eventType",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-          Event Type
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "guest",
-    header: "Guests",
-    cell: ({ row }) => {
-      const guest = row.getValue("guest") as string;
-      return <span>{guest}</span>;
-    },
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.getValue("status");
-
-      return (
-        <div
-          className={cn(
-            `p-1 rounded-md w-max text-xs`,
-            status === "pending" && "bg-yellow-500/40",
-            status === "success" && "bg-green-500/40",
-            status === "failed" && "bg-red-500/40"
-          )}
-        >
-          {status as string}
-        </div>
-      );
-    },
-  },
-  {
-    id: "actions",
-    header: () => <div className="text-center">Actions</div>,
-    cell: ({ row }) => {
-      const payment = row.original;
+      const inquiry = row.original;
 
       return (
         <DropdownMenu>
@@ -153,13 +147,20 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Edit
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+            {/* Edit */}
+            <DropdownMenuItem asChild>
+              <Link href={`/inquiries/edit/${inquiry.id}`}>Edit Inquiry</Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
+
+            {/* Delete */}
+            <DropdownMenuItem
+              onClick={() => alert(`Delete inquiry ${inquiry.id}`)}
+              className="text-red-600"
+            >
+              Delete Inquiry
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
