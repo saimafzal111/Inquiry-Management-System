@@ -1,8 +1,7 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Trash2, ParkingCircle, Bed, Calendar, Check, Car, Mail } from "lucide-react"
+import { ParkingCircle, Bed, Calendar, Check, Car, Mail } from "lucide-react"
 import { AddAttribute } from "@/components/AddAtribute"
 import { EditEvent } from "@/components/EditEvent"
 import { DeleteEvent } from "@/components/DeleteEvent"

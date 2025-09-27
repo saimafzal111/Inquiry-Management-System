@@ -1,6 +1,6 @@
 import React from "react"
-import { AddUser } from "./AddUser"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import AddUser from "./AddUser"
 
 function DashboardCards() {
   return (
