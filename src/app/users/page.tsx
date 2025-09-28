@@ -42,14 +42,70 @@ export type Payment = {
   role: "admin" | "sales" | "owner"
   status: "pending" | "processing" | "success" | "failed" | "Active"
   email: string
+  username: string
+  venue: string
+  eventdate: string 
+  deadline: string
+  eventType: "wedding" | "birthday" | "conference" | "corporate" | "anniversary" | "aoncert" | "party" 
+  guest?: number
+  
 }
 
 const data: Payment[] = [
-  { id: "m5gr84i9", role: "admin", amount: 316, name: "Admin", status: "Active", email: "ken99@example.com" },
-  { id: "3u1reuv4", role: "owner", amount: 242, name: "Abdullah", status: "Active", email: "Abe45@example.com" },
-  { id: "derv1ws0", role: "sales", amount: 837, name: "Umair", status: "Active", email: "Monserrat44@example.com" },
-  { id: "5kma53ae", role: "sales", amount: 874, name: "Hamza", status: "Active", email: "Silas22@example.com" },
+  { 
+    id: "m5gr84i9", 
+    eventdate: "2025-04-05", 
+    deadline: "2025-01-15", 
+    username: "ken99", 
+    venue: "Grand Hall", 
+    role: "admin", 
+    amount: 316, 
+    name: "Admin", 
+    status: "Active", 
+    email: "ken99@example.com",
+    eventType: "wedding",
+  },
+  { 
+    id: "3u1reuv4", 
+    eventdate: "2025-04-05", 
+    deadline: "2025-02-10",
+    username: "abe45", 
+    venue: "Sunset Gardens", 
+    role: "owner", 
+    amount: 242, 
+    name: "Abdullah", 
+    status: "Active", 
+    email: "Abe45@example.com",
+    eventType: "conference",
+  },
+  { 
+    id: "derv1ws0", 
+    eventdate: "2025-04-05", 
+    deadline: "2025-03-05",
+    username: "umair_sales", 
+    venue: "Crystal Ballroom", 
+    role: "sales", 
+    amount: 837, 
+    name: "Umair", 
+    status: "Active", 
+    email: "Monserrat44@example.com",
+    eventType: "birthday",
+  },
+  { 
+    id: "5kma53ae", 
+    eventdate: "2025-04-05", 
+    deadline: "2025-03-05",
+    username: "hamza_s", 
+    venue: "Emerald Venue", 
+    role: "sales", 
+    amount: 874, 
+    name: "Hamza", 
+    status: "Active", 
+    email: "Silas22@example.com",
+    eventType: "corporate",
+  },
 ]
+
 
 export const columns: ColumnDef<Payment>[] = [
   {

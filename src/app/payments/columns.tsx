@@ -99,10 +99,11 @@ export const columns: ColumnDef<Inquiry>[] = [
     cell: ({ row }) => <div className="capitalize">{row.getValue('eventType')}</div>,
   },
   {
-    accessorKey: 'guests',
-    header: 'Guests',
-    cell: ({ row }) => <div>{row.getValue('guests')}</div>,
-  },
+  accessorKey: "guest",
+  header: "Guests",
+  cell: ({ row }) => <div>{row.getValue("guest") ?? 0}</div>, // fallback to 0
+},
+
   {
     accessorKey: 'notes',
     header: 'Notes',
