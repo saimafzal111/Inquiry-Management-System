@@ -115,7 +115,7 @@ export function DataTable<TData, TValue>({
 
           <Link href="/inquiries/create" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto bg-orange-500/95 text-white hover:bg-orange-400">
-              + Add Venue
+              + Add Inquiries
             </Button>
           </Link>
         </div>

@@ -1,151 +1,141 @@
-// app/venues/create/page.tsx
+// app/locations/create/page.tsx
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
 
-export default function CreateVenuePage() {
-  const [file, setFile] = useState<File | null>(null);
+export default function CreateLocationPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Venue form submitted ✅", { file });
+    setLoading(true);
+
+    //  yahan API call hogi location add krny k liye exact okk jb real map add ho ga tb ...!
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/location"); 
+    }, 1000);
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-6">Add Venue</h1>
+    <div className="flex flex-1 flex-col p-6">
+      <Card className="max-w-3xl mx-auto w-full">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Add New Venue</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
+            <div className="space-y-2">
+              <Label>Venue Name</Label>
+              <Input placeholder="Enter venue name" required />
+            </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Grid layout for inputs */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* User */}
-          <div className="space-y-2">
-            <Label>User</Label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select user" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="user1">User 1</SelectItem>
-                <SelectItem value="user2">User 2</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            {/* Image URL */}
+            <div className="space-y-2">
+              <Label>Image URL</Label>
+              <Input type="url" placeholder="https://example.com/image.jpg" />
+            </div>
 
-          {/* Upload Image */}
-          <div className="space-y-2">
-            <Label>Upload Image</Label>
-            <Input
-              type="file"
-              onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-            />
-          </div>
+            {/* Map Link */}
+            <div className="space-y-2">
+              <Label>Map Link</Label>
+              <Input type="url" placeholder="https://maps.google.com/..." />
+            </div>
 
-          {/* Location Name */}
-          <div className="space-y-2">
-            <Label htmlFor="locationName">Location Name</Label>
-            <Input id="locationName" placeholder="Enter location" />
-          </div>
+            {/* Capacity */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Min Capacity</Label>
+                <Input type="number" placeholder="50" />
+              </div>
+              <div>
+                <Label>Max Capacity</Label>
+                <Input type="number" placeholder="500" />
+              </div>
+            </div>
 
-          {/* Primary Phone */}
-          <div className="space-y-2">
-            <Label htmlFor="primaryPhone">Primary Phone Number</Label>
-            <Input id="primaryPhone" placeholder="Primary phone number" />
-          </div>
+            {/* Address */}
+            <div className="space-y-2">
+              <Label>Address</Label>
+              <Textarea placeholder="Full venue address" className="resize-none" />
+            </div>
 
-          {/* Secondary Phone */}
-          <div className="space-y-2">
-            <Label htmlFor="secondaryPhone">Secondary Phone Number</Label>
-            <Input id="secondaryPhone" placeholder="Secondary phone number" />
-          </div>
+            {/* Phones */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Primary Phone</Label>
+                <Input type="tel" placeholder="+92 300 1234567" />
+              </div>
+              <div>
+                <Label>Secondary Phone</Label>
+                <Input type="tel" placeholder="+92 333 9876543" />
+              </div>
+            </div>
 
-          {/* Min Capacity */}
-          <div className="space-y-2">
-            <Label htmlFor="minCapacity">Min Capacity</Label>
-            <Input id="minCapacity" type="number" placeholder="Min Capacity" />
-          </div>
+            {/* Status */}
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Active">Active</SelectItem>
+                  <SelectItem value="Pending">Pending</SelectItem>
+                  <SelectItem value="Inactive">Inactive</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          {/* Max Capacity */}
-          <div className="space-y-2">
-            <Label htmlFor="maxCapacity">Max Capacity</Label>
-            <Input id="maxCapacity" type="number" placeholder="Max Capacity" />
-          </div>
+            {/* Attributes */}
+            <div className="space-y-2">
+              <Label>Attributes</Label>
+              <div className="flex gap-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="bed" />
+                  <label htmlFor="bed">Bed</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="car" />
+                  <label htmlFor="car">Car</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="mail" />
+                  <label htmlFor="mail">Mail</label>
+                </div>
+              </div>
+            </div>
 
-          {/* Address */}
-          <div className="space-y-2 md:col-span-2 lg:col-span-3">
-            <Label htmlFor="address">Address</Label>
-            <Textarea id="address" placeholder="Address" />
-          </div>
+            {/* Event Types */}
+            <div className="space-y-2">
+              <Label>Event Types</Label>
+              <Input placeholder="e.g. Wedding, Corporate, Birthday" />
+              <p className="text-xs text-gray-500">Comma separated</p>
+            </div>
 
-          {/* Attributes */}
-          <div className="space-y-2">
-            <Label>Attributes</Label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select options" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="wifi">WiFi</SelectItem>
-                <SelectItem value="parking">Parking</SelectItem>
-                <SelectItem value="sound">Sound System</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Event Types */}
-          <div className="space-y-2">
-            <Label>Event Types</Label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select options" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="wedding">Wedding</SelectItem>
-                <SelectItem value="party">Party</SelectItem>
-                <SelectItem value="conference">Conference</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Status */}
-          <div className="space-y-2">
-            <Label>Status</Label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Form Actions */}
-        <div className="flex justify-end gap-3">
-          <Button variant="outline" type="button">
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="bg-orange-500/95 text-white hover:bg-orange-400"
-          >
-            Add Location
-          </Button>
-        </div>
-      </form>
+            {/* Submit */}
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                className="bg-orange-500/95 text-white hover:bg-orange-400"
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save Venue"}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

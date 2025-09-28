@@ -1,10 +1,16 @@
-import { DataTable } from '../payments/data-table';
-import { columns } from '../payments/columns';
-import { inquiries } from '../../app/inquiries/inquiries'; 
+// src/app/locations/page.tsx
+import { columns } from "./columns";
+import { DataTable } from "./data-table"; 
+import { locations } from "./location"; 
 
 
-export default function InquiryOversightPage() {
-  const data = inquiries;
+async function getLocations() {
+
+  return locations; 
+}
+
+export default async function LocationManagementPage() {
+  const data = await getLocations();
 
   return (
     <div className="flex flex-1 flex-col">
@@ -13,9 +19,15 @@ export default function InquiryOversightPage() {
           <div className="w-full px-6">
             <div className="flex flex-col py-4">
               <h2 className="text-2xl font-bold mb-2">Location Management</h2>
-              <DataTable columns={columns} data={data} />
+              
+              <DataTable
+                columns={columns}
+                data={data}
+                filterColumnId="name"
+                filterPlaceholder="Filter by location name"
+              />
             </div>
-          </div>  
+          </div>
         </div>
       </div>
     </div>
