@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { EditEvent } from "./EditEvent"
-import { Button } from "./ui/button"
 import { DeleteEvent } from "./DeleteEvent"
 
 const events = [

@@ -131,36 +131,28 @@ export const columns: ColumnDef<Inquiry>[] = [
     ),
   },
   {
-    id: 'actions',
-    enableHiding: false,
-    header: 'Actions',
-    cell: ({ row }) => {
-      const inquiry = row.original;
+  id: 'actions',
+  enableHiding: false,
+  header: 'Actions',
+  cell: () => {
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-
-            {/* Edit */}
-            <DropdownMenuItem>
-              Edit Inquiry
-            </DropdownMenuItem>
-
-            {/* Delete */}
-            <DropdownMenuItem
-              className="text-red-600"
-            >
-              Delete Inquiry
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          {/* Delete */}
+          <DropdownMenuItem className="text-red-600">
+            Delete Inquiry
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
   },
+}
+
 ];
