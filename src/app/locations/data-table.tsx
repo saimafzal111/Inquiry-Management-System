@@ -24,9 +24,10 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ChevronsUpDown, Settings2 } from "lucide-react";
 import Link from "next/link";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -80,16 +81,51 @@ export function DataTable<TData, TValue>({
             className="max-w-sm"
           />
 
-          <Button variant="outline" className="w-[150px] justify-between">
-            All Status
-            <ArrowUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                // role="combobox"
+                className="w-full sm:w-[140px] justify-between capitalize"
+              >
+                All
+                <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Active")}>
+                Active
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Inactive")}>
+                Inactive
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Pending")}>
+                Pending
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline">
-            Views
-            <MoreHorizontal className="ml-2 h-4 w-4" />
-          </Button>
+           <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-full sm:w-auto">
+                Views <Settings2 className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="w-48">
+              {table.getAllColumns().map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                  className="capitalize flex items-center"
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link href="/locations/create" passHref>
             <Button className="bg-orange-500/95 text-white hover:bg-orange-400">
               + Add Venue

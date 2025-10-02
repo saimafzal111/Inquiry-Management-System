@@ -19,7 +19,6 @@ export default function CreateLocationPage() {
     e.preventDefault();
     setLoading(true);
 
-    //  yahan API call hogi location add krny k liye exact okk jb real map add ho ga tb ...!
     setTimeout(() => {
       setLoading(false);
       router.push("/location"); 

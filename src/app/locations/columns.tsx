@@ -185,8 +185,8 @@ function LocationActions({ location }: { location: Location }) {
 }
 
 // Table column definitions
-const headerClass = "px-4 py-2 text-sm font-semibold text-gray-700";
-const cellClass = "px-4 py-2 text-sm whitespace-nowrap";
+const headerClass = "px-4 text-sm font-semibold text-gray-700";
+const cellClass = "px-4 text-sm whitespace-nowrap";
 
 export const columns: ColumnDef<Location>[] = [
     {

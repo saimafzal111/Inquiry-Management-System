@@ -119,28 +119,28 @@ export function DataTable<TData, TValue>({
         {/* Right side actions */}
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
           <DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button variant="outline" className="w-full sm:w-auto">
-      Views <Settings2 className="ml-2 h-4 w-4" />
-    </Button>
-  </DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-full sm:w-auto">
+                Views <Settings2 className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
 
-  <DropdownMenuContent className="w-48">
-    {table.getAllColumns().map((column) => (
-      <DropdownMenuCheckboxItem
-        key={column.id}
-        checked={column.getIsVisible()}
-        onCheckedChange={(value) => column.toggleVisibility(!!value)}
-        className="capitalize flex items-center gap-2 mb-2"
-      >
-        <DropdownMenuItemIndicator>
-          <Check className="h-4 w-4" />
-        </DropdownMenuItemIndicator>
-        {column.id}
-      </DropdownMenuCheckboxItem>
-    ))}
-  </DropdownMenuContent>
-</DropdownMenu>
+            <DropdownMenuContent className="w-48">
+              {table.getAllColumns().map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                  className="capitalize flex items-center gap-2 mb-2"
+                >
+                  <DropdownMenuItemIndicator>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuItemIndicator>
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
 
           <Link href="/inquiries/create" className="w-full sm:w-auto">

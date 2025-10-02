@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { ComboboxDemo } from "./ComboBox"
 
 export function AddAttribute() {
   return (
@@ -26,6 +27,7 @@ export function AddAttribute() {
           <div className="grid gap-3">
             <label htmlFor="sheet-demo-name">Name</label>
             <Input id="sheet-demo-name" placeholder="Enter Attribute name" />
+            <ComboboxDemo />
             <Button
               type="submit"
               className="bg-orange-600 hover:bg-orange-700 text-white"
