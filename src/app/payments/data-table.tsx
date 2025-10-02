@@ -27,14 +27,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ChevronsUpDown, Settings2 } from "lucide-react";
+import { Check, ChevronsUpDown, Settings2 } from "lucide-react";
 import Link from "next/link";
 import DataTablePagination from "@/components/TablePagination";
+import { Calendar22 } from "@/components/Calendar";
+import { DropdownMenu, DropdownMenuContent } from "@/components/ui/dropdown-menu";
+import { DropdownMenuCheckboxItem, DropdownMenuItemIndicator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -77,41 +75,73 @@ export function DataTable<TData, TValue>({
       {/* Filters and Actions */}
       <div className="flex flex-col gap-3 mb-4 md:flex-row md:items-center md:justify-between">
         {/* Left side filters */}
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
           <Input
             placeholder="Filter by location name"
             value={
-              (table.getColumn("contactPerson")?.getFilterValue() as string) ??
-              ""
+              (table.getColumn("contactPerson")?.getFilterValue() as string) ?? ""
             }
             onChange={(event) =>
               table.getColumn("contactPerson")?.setFilterValue(event.target.value)
             }
-            className="w-full max-w-sm sm:w-[220px]"
+            className="w-full sm:w-[220px]"
           />
 
-          <Popover>
-            <PopoverTrigger asChild>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                role="combobox"
+                // role="combobox"
                 className="w-full sm:w-[140px] justify-between capitalize"
               >
-                All Status
+                All
                 <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
               </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[140px] p-0">
-              <p className="p-2 text-sm">Filter...</p>
-            </PopoverContent>
-          </Popover>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Pending")}>
+                Pending
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Confirmed")}>
+                Confirmed
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Cancelled")}>
+                Cancelled
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Deleted")}>
+                Deleted
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+            <Calendar22 />
+          </DropdownMenu>
         </div>
 
         {/* Right side actions */}
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <Button variant="outline" className="w-full sm:w-auto">
-            Views <Settings2 className="ml-2 h-4 w-4" />
-          </Button>
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+          <DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline" className="w-full sm:w-auto">
+      Views <Settings2 className="ml-2 h-4 w-4" />
+    </Button>
+  </DropdownMenuTrigger>
+
+  <DropdownMenuContent className="w-48">
+    {table.getAllColumns().map((column) => (
+      <DropdownMenuCheckboxItem
+        key={column.id}
+        checked={column.getIsVisible()}
+        onCheckedChange={(value) => column.toggleVisibility(!!value)}
+        className="capitalize flex items-center gap-2 mb-2"
+      >
+        <DropdownMenuItemIndicator>
+          <Check className="h-4 w-4" />
+        </DropdownMenuItemIndicator>
+        {column.id}
+      </DropdownMenuCheckboxItem>
+    ))}
+  </DropdownMenuContent>
+</DropdownMenu>
+
 
           <Link href="/inquiries/create" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto bg-orange-500/95 text-white hover:bg-orange-400">
@@ -120,6 +150,7 @@ export function DataTable<TData, TValue>({
           </Link>
         </div>
       </div>
+
 
       {/* Table */}
       <div className="overflow-hidden rounded-md border mt-2">
@@ -133,9 +164,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>

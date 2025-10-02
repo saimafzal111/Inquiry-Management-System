@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronDownIcon } from "lucide-react"
+import { CalendarCheck2Icon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -22,11 +22,12 @@ export function Calendar22() {
           <Button
             variant="outline"
             id="date"
-            className="w-48 justify-between font-normal"
+            className="w-[220px] justify-between font-normal flex items-center"
           >
-            {date ? date.toLocaleDateString() : "Select date"}
-            <ChevronDownIcon />
+            <CalendarCheck2Icon className="h-4 w-4 mr-2" />
+            <span>{date ? date.toLocaleDateString() : "Oct 01, 2025 - Oct 31, 2025"}</span>
           </Button>
+
         </PopoverTrigger>
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
           <Calendar

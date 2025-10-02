@@ -8,7 +8,7 @@ function DashboardCards() {
       {/* Header row */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-        <div className="flex items-center rounded-md bg-[#FF8904] text-black font-medium shadow hover:bg-orange-700 active:translate-y-[1px]">
+        <div className="flex items-center rounded-md bg-[#EE8308] text-black font-medium shadow hover:bg-[#DE7841] active:translate-y-[1px]">
           <span><AddUser /></span>
         </div>
       </div>

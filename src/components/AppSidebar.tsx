@@ -3,6 +3,7 @@ import { Calendar1, CalendarCheck, LayoutDashboard, MapPinned, NotebookPen, Tags
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -73,6 +74,12 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+        <SidebarGroupContent>
+          <SidebarFooter className="pl-4 flex gap-0 mb-2 hover:">
+          <h1 className="text-sm text-black font-semibold">Admin</h1>
+          <p className="text-sm">admin@system.com</p>
+        </SidebarFooter>
+        </SidebarGroupContent>
     </Sidebar>
   )
 }
