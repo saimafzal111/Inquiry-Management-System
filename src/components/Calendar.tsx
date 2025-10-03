@@ -22,10 +22,10 @@ export function Calendar22() {
           <Button
             variant="outline"
             id="date"
-            className="w-[220px] justify-between font-normal flex items-center"
+            className="font-normal flex items-center"
           >
-            <CalendarCheck2Icon className="h-4 w-4 mr-2" />
-            <span>{date ? date.toLocaleDateString() : "Oct 01, 2025 - Oct 31, 2025"}</span>
+            <CalendarCheck2Icon className="" />
+            <span>{date ? date.toLocaleDateString() : "Oct 01, 2025"}</span>
           </Button>
 
         </PopoverTrigger>

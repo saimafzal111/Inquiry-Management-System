@@ -30,7 +30,7 @@ export function AddAttribute() {
             <ComboboxDemo />
             <Button
               type="submit"
-              className="bg-orange-600 hover:bg-orange-700 text-white"
+              className="bg-[#EE8308] hover:bg-[#DE7841] text-white"
             >
               Add Attribute
             </Button>

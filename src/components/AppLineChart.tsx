@@ -66,7 +66,7 @@ export function AppLineChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
+        <CardTitle className="flex items-center justify-between text-xl lg:justify-between sm:flex-wrap">
           Enquiries Over Months
           <Calendar22 />
         </CardTitle>
