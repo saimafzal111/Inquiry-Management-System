@@ -15,7 +15,7 @@ export function AddAttribute() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+        <Button className="bg-[#EE8308] hover:bg-[#DE7841] text-white">
           + Add New User
         </Button>
       </SheetTrigger>
