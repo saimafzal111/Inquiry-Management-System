@@ -98,7 +98,7 @@ export function DataTable<TData, TValue>({
                 <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="flex flex-col gap-2 cursor-pointer items-center">
               <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Pending")}>
                 Pending
               </DropdownMenuCheckboxItem>

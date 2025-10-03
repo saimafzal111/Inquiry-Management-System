@@ -65,74 +65,77 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       {/* Search/Filter & Actions Bar */}
-      <div className="flex w-full flex-wrap justify-between gap-2 mb-2">
-        <div className="flex gap-2">
-          <Input
-            placeholder={filterPlaceholder}
-            value={
-              (table.getColumn(filterColumnId as string)?.getFilterValue() as string) ??
-              ""
-            }
-            onChange={(event) =>
-              table.getColumn(filterColumnId as string)?.setFilterValue(
-                event.target.value
-              )
-            }
-            className="max-w-sm"
-          />
+<div className="flex w-full flex-col sm:flex-row justify-between gap-2 mb-2">
+  {/* Left Side */}
+  <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+    <Input
+      placeholder={filterPlaceholder}
+      value={
+        (table.getColumn(filterColumnId as string)?.getFilterValue() as string) ??
+        ""
+      }
+      onChange={(event) =>
+        table.getColumn(filterColumnId as string)?.setFilterValue(
+          event.target.value
+        )
+      }
+      className="w-full sm:max-w-sm"
+    />
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                // role="combobox"
-                className="w-full sm:w-[140px] justify-between capitalize"
-              >
-                All
-                <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Active")}>
-                Active
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Inactive")}>
-                Inactive
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Pending")}>
-                Pending
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <div className="flex gap-2">
-           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full sm:w-auto">
-                Views <Settings2 className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          className="w-full sm:w-[140px] justify-between capitalize"
+        >
+          All
+          <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Active")}>
+          Active
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Inactive")}>
+          Inactive
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem onClick={() => table.getColumn("status")?.setFilterValue("Pending")}>
+          Pending
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </div>
 
-            <DropdownMenuContent className="w-48">
-              {table.getAllColumns().map((column) => (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  className="capitalize flex items-center"
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Link href="/locations/create" passHref>
-            <Button className="bg-orange-500/95 text-white hover:bg-orange-400">
-              + Add Venue
-            </Button>
-          </Link>
-        </div>
-      </div>
+  {/* Right Side */}
+  <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="w-full sm:w-auto">
+          Views <Settings2 className="ml-2 h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent className="w-48">
+        {table.getAllColumns().map((column) => (
+          <DropdownMenuCheckboxItem
+            key={column.id}
+            checked={column.getIsVisible()}
+            onCheckedChange={(value) => column.toggleVisibility(!!value)}
+            className="capitalize flex items-center"
+          >
+            {column.id}
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+
+    <Link href="/locations/create" passHref>
+      <Button className="w-full sm:w-auto bg-orange-500/95 text-white hover:bg-orange-400">
+        + Add Venue
+      </Button>
+    </Link>
+  </div>
+</div>
 
       {/* Table Content */}
       <div className="overflow-hidden rounded-md border">
@@ -252,11 +255,7 @@ export function DataTable<TData, TValue>({
     Next
   </Button>
 </div>
-
 </div>
-
-
-
     </div>
   );
 }
